@@ -1,6 +1,6 @@
-import first.Author;
-import first.Book;
-import first.Bookcase;
+package first;
+
+import second.Bookcase;
 
 import java.io.*;
 

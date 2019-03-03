@@ -95,25 +95,15 @@ public class Bookcase implements Serializable {
             try {
                 while (true){
                     String bookTitle = (String) ois.readObject();
-                        System.err.println("\n" + bookTitle);
                     String authorsName = (String) ois.readObject();
-                        System.err.println(authorsName);
                     String authorsSurname = (String) ois.readObject();
-                        System.err.println(authorsSurname);
                     String publisher = (String) ois.readObject();
-                        System.err.println(publisher);
                     int yearOfPublishing = ois.readInt();
-                        System.err.println(yearOfPublishing);
                     int pages = ois.readInt();
-                        System.err.println(pages);
                     String customerName = (String) ois.readObject();
-                        System.err.println(customerName);
                     String customerSurName = (String) ois.readObject();
-                        System.err.println(customerSurName);
                     List<Book> customersBooks = (List<Book>) ois.readObject();
-                        System.err.println(customersBooks);
                     boolean hasCustomer = ois.readBoolean();
-                        System.err.println(hasCustomer + "\nend");
 
                     books.add(new Book(bookTitle,
                             new Author(authorsName, authorsSurname),

@@ -97,18 +97,19 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return yearOfPublishing == book.yearOfPublishing &&
+        boolean result = yearOfPublishing == book.yearOfPublishing &&
                 pages == book.pages &&
-                hasCustomer == book.hasCustomer &&
+                Objects.equals(title, book.title) &&
                 Objects.equals(author, book.author) &&
-                Objects.equals(publisher, book.publisher) &&
-                Objects.equals(customer, book.customer);
+                Objects.equals(publisher, book.publisher);
+        return result;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(author, publisher, yearOfPublishing, pages, customer, hasCustomer);
+        return Objects.hash(title, author, publisher, yearOfPublishing, pages);
     }
+
 
     @Override
     public String toString() {

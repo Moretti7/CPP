@@ -1,9 +1,9 @@
-package first;
+package third;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.Objects;
 
-public class Book implements Serializable {
+public class Book implements Externalizable {
     private String title;
     private Author author;
     private String publisher;
@@ -103,5 +103,27 @@ public class Book implements Serializable {
     public String toString() {
         return String.format("Title: %s\tAuthor: %s\tPublishing: %s\t Year of publisher: %d Pages: %d p Customer: %s",
                 this.title, this.author, this.publisher, this.yearOfPublishing, this.pages, this.customer);
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeObject(title);
+        out.writeObject(author);
+        out.writeObject(publisher);
+        out.writeInt(yearOfPublishing);
+        out.writeInt(pages);
+        out.writeObject(customer);
+        out.writeBoolean(hasCustomer);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        title = (String) in.readObject();
+        author = (Author) in.readObject();
+        publisher = (String) in.readObject();
+        yearOfPublishing = in.readInt();
+        pages = in.readInt();
+        customer = (Customer) in.readObject();
+        hasCustomer = in.readBoolean();
     }
 }

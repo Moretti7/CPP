@@ -75,17 +75,13 @@ public class Bookcase implements Serializable {
                 oos.writeInt(book.getYearOfPublishing());
                 oos.writeInt(book.getPages());
 
-                if (book.getCustomer() == null) {
-                    oos.writeObject("");
-                    oos.writeObject("");
-                    oos.writeObject(new LinkedList<Book>());
-                }else {
+                oos.writeBoolean(book.isHasCustomer());
+                if (book.getCustomer() != null) {
                     oos.writeObject(book.getCustomer().getName());
                     oos.writeObject(book.getCustomer().getSurname());
                     oos.writeObject(book.getCustomer().getBooks());
                 }
 
-                oos.writeBoolean(book.isHasCustomer());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -105,16 +101,21 @@ public class Bookcase implements Serializable {
                 String publisher = (String) ois.readObject();
                 int yearOfPublishing = ois.readInt();
                 int pages = ois.readInt();
-                String customerName = (String) ois.readObject();
-                String customerSurName = (String) ois.readObject();
-                List<Book> customersBooks = (List<Book>) ois.readObject();
-                boolean hasCustomer = ois.readBoolean();
 
-                books.add(new Book(bookTitle,
-                        new Author(authorsName, authorsSurname),
-                        publisher, yearOfPublishing, pages,
-                        new Customer(customerName, customerSurName, customersBooks),
-                        hasCustomer));
+                boolean hasCustomer = ois.readBoolean();
+                if(hasCustomer) {
+                    String customerName = (String) ois.readObject();
+                    String customerSurName = (String) ois.readObject();
+                    List<Book> customersBooks = (List<Book>) ois.readObject();
+                    books.add(new Book(bookTitle,
+                            new Author(authorsName, authorsSurname),
+                            publisher, yearOfPublishing, pages,
+                            new Customer(customerName, customerSurName, customersBooks),
+                            hasCustomer));
+                }else
+                    books.add(new Book(bookTitle,
+                            new Author(authorsName, authorsSurname),
+                            publisher, yearOfPublishing, pages));
             }
 
         } catch (IOException e) {
